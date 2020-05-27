@@ -19,26 +19,29 @@ class LinkedList(object):
     def __init__(self, head=None):
         self.head = head
 
+# This method will add a new Element to the end of our LinkedList.
     def append(self, new_element):
         current = self.head
-        if self.head:
-            while current.next:
+        if self.head is None:
+            self.head = new_element
+        else:
+            while current.next is not None:
                 current = current.next
             current.next = new_element
-        else:
-            self.head = new_element
 
     def get_position(self, position):
         """Get an element from a particular position.
         Assume the first position is "1".
         Return "None" if position is not in the list."""
+        counter = 1
         current = self.head
-        self.position = 0
-
-        while current is not None:
-            self.position += 0
+        if position < 1:
+            return None
+        while current and counter <= position:
+            if counter == position:
+                return current
             current = current.next
-        return position
+            counter += 1
         return None
 
     def insert(self, new_element, position):
@@ -46,7 +49,18 @@ class LinkedList(object):
         Assume the first position is "1".
         Inserting at position 3 means between
         the 2nd and 3rd elements."""
-        pass
+        counter = 1
+        current = self.head
+        if position == 1:
+            new_element.next = self.head
+            self.head = new_element
+        elif position > 1:
+            while current and counter < position:
+                if counter == position - 1:
+                    new_element.next = current.next
+                    current.next = new_element
+                current = current.next
+                counter += 1
 
     def delete(self, value):
         """Delete the first node with a given value."""
